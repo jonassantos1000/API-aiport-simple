@@ -61,7 +61,7 @@ public class TicketResource {
 	}
 	
 	@PutMapping
-	public ResponseEntity<Ticket> update(TicketDTO dto){
+	public ResponseEntity<Ticket> update(@RequestBody TicketDTO dto){
 		Ticket ticket = service.update(Ticket.converteDTO(dto));
 		return new ResponseEntity<>(ticket, HttpStatus.OK);
 	}

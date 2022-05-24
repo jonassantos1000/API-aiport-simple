@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.magna.aeroporto.entities.Client;
 import com.magna.aeroporto.entities.Ticket;
 
-public class FlightTicketsDTO {
+public class TicketFiltradoDTO {
 
 		private Long id;
 
@@ -15,11 +15,11 @@ public class FlightTicketsDTO {
 		@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT")
 		private Instant dataCompra;
 		
-		public FlightTicketsDTO() {
+		public TicketFiltradoDTO() {
 			
 		}
 
-		public FlightTicketsDTO(Ticket ticket) {
+		public TicketFiltradoDTO(Ticket ticket) {
 			super();
 			this.client= (ticket.getClient());
 			this.dataCompra=(ticket.getDataCompra());

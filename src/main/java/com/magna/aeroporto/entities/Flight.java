@@ -2,7 +2,6 @@ package com.magna.aeroporto.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -16,7 +15,6 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.magna.aeroporto.dto.FlightDTO;
-import com.magna.aeroporto.dto.FlightTicketsDTO;
 
 @Entity
 public class Flight implements Serializable {
@@ -117,32 +115,17 @@ public class Flight implements Serializable {
 	public Set<Ticket> getTickets (){
 		return ticket;
 	}
-	
-	private static Set<Ticket> converterTicketsDTO(Set<FlightTicketsDTO> dto){
-		Set<Ticket> ticketsConvertidos = new HashSet<>();
-		if(dto != null && !dto.isEmpty()) {
-			dto.forEach(item -> {
-				Ticket ticket = new Ticket();
-				ticket.setClient(item.getClient());
-				ticket.setDataCompra(item.getDataCompra());
-				ticket.setId(item.getId());
-				ticketsConvertidos.add(ticket);
-			});
-			return ticketsConvertidos;
-		}
 		
-		return ticketsConvertidos;
-	}
-	
 	public static Flight converteDTO(FlightDTO flight) {
 		Flight dto = new Flight();
+		System.out.println(flight.getId());
 		dto.setArrivalTime(flight.getArrivalTime());
 		dto.setDepartureTime(flight.getDepartureTime());
 		dto.setDestiny(flight.getDestiny());
 		dto.setId(flight.getId());
 		dto.setOrigin(flight.getOrigin());
 		dto.setPrice(flight.getPrice());
-		dto.setTicket(converterTicketsDTO(flight.getTickets()));
+		dto.setTicket(flight.getTickets());
 		return dto;
 	}
 

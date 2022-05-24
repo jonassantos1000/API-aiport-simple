@@ -52,7 +52,8 @@ public class FlightResource {
 	}
 	
 	@PutMapping
-	public ResponseEntity<Flight> update(FlightDTO dto){
+	public ResponseEntity<Flight> update(@RequestBody FlightDTO dto){
+		System.out.println("testnado id no resource: "+ dto.getId());
 		Flight flight = service.update(Flight.converteDTO(dto));
 		return new ResponseEntity<> (flight, HttpStatus.OK);
 	}

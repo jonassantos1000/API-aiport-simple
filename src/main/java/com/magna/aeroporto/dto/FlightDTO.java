@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.magna.aeroporto.entities.Flight;
 import com.magna.aeroporto.entities.Ticket;
 
@@ -20,7 +22,7 @@ public class FlightDTO {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT")
 	private Instant arrivalTime;
 	private Double price;
-	private Set<FlightTicketsDTO> ticket;
+	private Set<Ticket> ticket;
 
 	public FlightDTO () {
 		
@@ -35,7 +37,7 @@ public class FlightDTO {
 		this.departureTime = departureTime;
 		this.arrivalTime = arrivalTime;
 		this.price = price;
-		this.ticket = filtrarTickets(ticket);
+		this.ticket = ticket;
 	}
 
 	public Long getId() {
@@ -86,19 +88,20 @@ public class FlightDTO {
 		this.price = price;
 	}
 	
-	public void setTickets(Set<FlightTicketsDTO> ticket) {
+	public void setTickets(Set<Ticket> ticket) {
 		this.ticket= ticket;
 	}
 	
-	public Set<FlightTicketsDTO> getTickets (){
+	@JsonIgnore
+	public Set<Ticket> getTickets (){
 		return ticket;
 	}
 	
-	private static Set<FlightTicketsDTO> filtrarTickets(Set<Ticket> ticket){
-		Set<FlightTicketsDTO> ticketsFiltrados = new HashSet<>();
-		ticket.forEach(item -> {
-			ticketsFiltrados.add(new FlightTicketsDTO(item));
-		});
+	@JsonGetter(value = "Tickets")
+	public Set<TicketFiltradoDTO> getTicketFiltrado(){
+		Set<TicketFiltradoDTO> ticketsFiltrados = new HashSet<>();
+		this.ticket.forEach(item ->
+			ticketsFiltrados.add(new TicketFiltradoDTO(item)));
 		return ticketsFiltrados;
 	}
 	
@@ -110,7 +113,7 @@ public class FlightDTO {
 		dto.setId(flight.getId());
 		dto.setOrigin(flight.getOrigin());
 		dto.setPrice(flight.getPrice());
-		dto.setTickets(filtrarTickets(flight.getTickets()));
+		dto.setTickets(flight.getTickets());
 		return dto;
 	}
 }
