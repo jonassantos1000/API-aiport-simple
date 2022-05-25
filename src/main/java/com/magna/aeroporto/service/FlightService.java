@@ -28,8 +28,8 @@ public class FlightService {
 		return flight.orElseThrow();
 	}
 	
-	public Flight update(Flight flight) {
-		Flight atual = findById(flight.getId());
+	public Flight update(Flight flight, Long id) {
+		Flight atual = repository.getReferenceById(id);
 		updateData(atual,flight);
 		return repository.save(atual);
 	}

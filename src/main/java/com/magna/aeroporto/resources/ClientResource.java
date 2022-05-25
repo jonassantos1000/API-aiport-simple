@@ -52,9 +52,9 @@ public class ClientResource {
 		return new ResponseEntity<>(client, HttpStatus.CREATED);
 	}
 	
-	@PutMapping
-	public ResponseEntity<Client> update(@RequestBody ClientDTO clientDTO){
-		Client client = service.update(Client.converterDTO(clientDTO));
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<Client> update(@Valid @RequestBody ClientDTO clientDTO, @PathVariable Long id){
+		Client client = service.update(Client.converterDTO(clientDTO), id);
 		return new ResponseEntity<>(client, HttpStatus.OK);
 	}
 	

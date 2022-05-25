@@ -15,10 +15,7 @@ public class TicketService {
 	@Autowired
 	TicketRepository repository;
 	
-
-	
 	public Ticket insert(Ticket ticket) {
-
 		return repository.save(ticket);
 	}
 	
@@ -31,8 +28,8 @@ public class TicketService {
 		return ticket.orElseThrow();
 	}
 	
-	public Ticket update(Ticket ticket) {
-		Ticket atual = findById(ticket.getId());
+	public Ticket update(Ticket ticket, Long id) {
+		Ticket atual = repository.getReferenceById(id);
 		updateData(atual, ticket);
 		return repository.save(atual);
 	}

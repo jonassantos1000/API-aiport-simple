@@ -3,6 +3,10 @@ package com.magna.aeroporto.dto;
 import java.io.Serializable;
 import java.util.Set;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import com.magna.aeroporto.entities.Client;
 import com.magna.aeroporto.entities.Ticket;
 
@@ -10,12 +14,22 @@ public class ClientDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
+	
+	@NotNull @NotEmpty @NotBlank
 	private String nome;
 
+	@NotNull @NotEmpty @NotBlank
 	private String cpf;
+	
+	@NotNull @NotEmpty @NotBlank
 	private String logradouro;
+	
+	@NotNull @NotEmpty @NotBlank
 	private String telefone;
+	
+	@NotNull @NotEmpty @NotBlank
 	private String email;
+	
 	private Set<Ticket> ticket;
 	
 	public ClientDTO() {

@@ -51,10 +51,9 @@ public class FlightResource {
 		return new ResponseEntity<>(listDTO, HttpStatus.OK);
 	}
 	
-	@PutMapping
-	public ResponseEntity<Flight> update(@RequestBody FlightDTO dto){
-		System.out.println("testnado id no resource: "+ dto.getId());
-		Flight flight = service.update(Flight.converteDTO(dto));
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<Flight> update(@RequestBody FlightDTO dto, @PathVariable Long id){
+		Flight flight = service.update(Flight.converteDTO(dto), id);
 		return new ResponseEntity<> (flight, HttpStatus.OK);
 	}
 	

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.magna.aeroporto.entities.Client;
 import com.magna.aeroporto.repositories.ClientRepository;
+import com.magna.aeroporto.service.exceptions.ResourceNotFoundException;
 
 @Service
 public class ClientService {
@@ -24,7 +25,7 @@ public class ClientService {
 		if (client.isPresent())
 			return client.get();
 		else
-			throw new IllegalArgumentException("Id Invalido");
+			throw new ResourceNotFoundException(new Throwable("ID"),"Não foi possivel encontrar um recurso válido com o id: "+id);
 	}
 	
 	public Client insert(Client client) {
@@ -32,13 +33,17 @@ public class ClientService {
 	}
 	
 	public void delete(Long id) {
-		repository.deleteById(id);
+		try {
+			repository.deleteById(id);
+		}catch(org.springframework.dao.EmptyResultDataAccessException e) {
+			throw new ResourceNotFoundException(new Throwable("ID"),"Não foi possivel encontrar um recurso válido com o id: "+id);
+		}
 	}
 	
-	public Client update(Client client) {
-		Client clientAtual = findById(client.getId());
+	public Client update(Client client, Long id) {
+		Client clientAtual = repository.getReferenceById(id);
 		updateData(clientAtual, client);
-		return repository.save(clientAtual);
+		return clientAtual;
 	}
 	
 	private void updateData(Client atual, Client novo) {

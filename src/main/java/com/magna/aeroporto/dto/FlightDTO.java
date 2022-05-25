@@ -4,6 +4,10 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -13,14 +17,22 @@ import com.magna.aeroporto.entities.Ticket;
 public class FlightDTO {
 	
 	private Long id;
+	
+	@NotNull @NotEmpty @NotBlank
 	private String destiny;
+	
+	@NotNull @NotEmpty @NotBlank
 	private String origin;
 	
+	@NotNull @NotEmpty @NotBlank
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT")
 	private Instant departureTime;
 	
+	@NotNull @NotEmpty @NotBlank
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT")
 	private Instant arrivalTime;
+	
+	@NotNull @NotEmpty @NotBlank
 	private Double price;
 	private Set<Ticket> ticket;
 
