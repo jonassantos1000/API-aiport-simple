@@ -16,6 +16,10 @@ public class ClientService {
 	@Autowired
 	ClientRepository repository;
 	
+	public Client insert(Client client) {
+		return repository.save(client);
+	}
+	
 	public List<Client> findAll(){
 		return repository.findAll();
 	}
@@ -28,8 +32,22 @@ public class ClientService {
 			throw new ResourceNotFoundException(new Throwable("ID"),"Não foi possivel encontrar um recurso válido com o id: "+id);
 	}
 	
-	public Client insert(Client client) {
-		return repository.save(client);
+	public Client update(Client client, Long id) {
+		try {
+			Client clientAtual = repository.getReferenceById(id);
+			updateData(clientAtual, client);
+			return repository.save(clientAtual);
+		}catch(javax.persistence.EntityNotFoundException e) {
+			throw new ResourceNotFoundException(new Throwable("Recurso Inexistente"),"Recurso que deseja atualizar não existe, verifique as informações passadas e tente novamente !");
+		}
+	}
+	
+	private void updateData(Client atual, Client novo) {
+		atual.setCpf(novo.getCpf());
+		atual.setEmail(novo.getEmail());
+		atual.setLogradouro(novo.getLogradouro());
+		atual.setNome(novo.getNome());
+		atual.setTelefone(novo.getTelefone());
 	}
 	
 	public void delete(Long id) {
@@ -40,18 +58,5 @@ public class ClientService {
 		}
 	}
 	
-	public Client update(Client client, Long id) {
-		Client clientAtual = repository.getReferenceById(id);
-		updateData(clientAtual, client);
-		return clientAtual;
-	}
-	
-	private void updateData(Client atual, Client novo) {
-		atual.setCpf(novo.getCpf());
-		atual.setEmail(novo.getEmail());
-		atual.setLogradouro(novo.getLogradouro());
-		atual.setNome(novo.getNome());
-		atual.setTelefone(novo.getTelefone());
-	}
 	
 }

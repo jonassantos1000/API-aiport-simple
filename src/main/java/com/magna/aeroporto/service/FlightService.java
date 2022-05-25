@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.magna.aeroporto.entities.Flight;
 import com.magna.aeroporto.repositories.FlightRepository;
+import com.magna.aeroporto.service.exceptions.ResourceNotFoundException;
 
 @Service
 public class FlightService {
@@ -25,13 +26,17 @@ public class FlightService {
 	
 	public Flight findById(Long id) {
 		Optional<Flight> flight = repository.findById(id);
-		return flight.orElseThrow();
+		return flight.orElseThrow(() -> new ResourceNotFoundException(new Throwable("ID"),"Não foi possivel encontrar um recurso válido com o id: "+id));
 	}
 	
 	public Flight update(Flight flight, Long id) {
-		Flight atual = repository.getReferenceById(id);
-		updateData(atual,flight);
-		return repository.save(atual);
+		try {
+			Flight atual = repository.getReferenceById(id);
+			updateData(atual,flight);
+			return repository.save(atual);
+		}catch(javax.persistence.EntityNotFoundException e) {
+			throw new ResourceNotFoundException(new Throwable("Recurso Inexistente"),"Recurso que deseja atualizar não existe, verifique as informações passadas e tente novamente !");
+		}
 	}
 	
 	private void updateData(Flight atual, Flight novo) {
@@ -43,6 +48,10 @@ public class FlightService {
 	}
 	
 	public void delete(Long id) {
-		repository.deleteById(id);
+		try {
+			repository.deleteById(id);
+		}catch(org.springframework.dao.EmptyResultDataAccessException e) {
+			throw new ResourceNotFoundException(new Throwable("ID"),"Não foi possivel encontrar um recurso válido com o id: "+id);
+		}
 	}
 }
