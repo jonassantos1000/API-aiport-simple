@@ -39,7 +39,7 @@ public class Flight implements Serializable {
 	private Instant arrivalTime;
 	
 	@NotNull
-	private Double price;
+	private Double price= 0.0;
 	
 	@OneToMany(mappedBy = "flight")
 	private Set<Ticket> ticket;

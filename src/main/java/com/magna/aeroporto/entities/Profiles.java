@@ -1,4 +1,4 @@
-package com.magna.aeroporto.config.validacao;
+package com.magna.aeroporto.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,7 +14,9 @@ public class Profiles implements GrantedAuthority {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private String nome;
+	
 	public Long getId() {
 		return id;
 	}
@@ -27,6 +29,7 @@ public class Profiles implements GrantedAuthority {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	
 	@Override
 	public String getAuthority() {
 		return this.nome;

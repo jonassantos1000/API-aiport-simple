@@ -1,11 +1,13 @@
-package com.magna.aeroporto.config.validacao;
+package com.magna.aeroporto.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,7 +26,7 @@ public class Users implements Serializable, UserDetails{
 	private String email;
 	private String password;
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Profiles> profiles = new ArrayList<>();
 	
 	public Users() {
@@ -37,6 +39,23 @@ public class Users implements Serializable, UserDetails{
 		this.email = email;
 		this.password = password;
 		this.profiles = profiles;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Users other = (Users) obj;
+		return Objects.equals(id, other.id);
 	}
 
 	public Long getId() {
@@ -53,14 +72,6 @@ public class Users implements Serializable, UserDetails{
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public List<Profiles> getProfiles() {
-		return profiles;
-	}
-
-	public void setProfiles(List<Profiles> profiles) {
-		this.profiles = profiles;
 	}
 
 	public void setPassword(String password) {

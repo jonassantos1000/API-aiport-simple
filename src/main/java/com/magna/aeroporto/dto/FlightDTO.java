@@ -4,7 +4,7 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -18,22 +18,23 @@ public class FlightDTO {
 	
 	private Long id;
 	
-	@NotNull @NotEmpty @NotBlank
+	@NotNull @NotEmpty
 	private String destiny;
 	
-	@NotNull @NotEmpty @NotBlank
+	@NotNull @NotEmpty
 	private String origin;
 	
-	@NotNull @NotEmpty @NotBlank
+	@NotNull
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT")
 	private Instant departureTime;
 	
-	@NotNull @NotEmpty @NotBlank
+	@NotNull
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT")
 	private Instant arrivalTime;
 	
-	@NotNull @NotEmpty @NotBlank
+	@Digits(integer = 7, fraction = 2)
 	private Double price;
+	
 	private Set<Ticket> ticket;
 
 	public FlightDTO () {

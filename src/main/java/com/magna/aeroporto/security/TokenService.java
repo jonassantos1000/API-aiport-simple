@@ -1,4 +1,4 @@
-package com.magna.aeroporto.config.security;
+package com.magna.aeroporto.security;
 
 import java.util.Date;
 
@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import com.magna.aeroporto.config.validacao.Users;
+import com.magna.aeroporto.entities.Users;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -32,6 +33,20 @@ public class TokenService {
 				.setExpiration(dataExpiracao)
 				.signWith(SignatureAlgorithm.HS256, secret)
 				.compact();
+	}
+
+	public boolean isTokenValid(String token) {
+		try {
+			Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token);
+			return true;
+		}catch (Exception e) {
+			return false;
+		}
+	}
+
+	public Long getIdUser(String token) {
+		Claims claims = Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token).getBody();
+		return Long.parseLong(claims.getSubject());
 	}
 
 }

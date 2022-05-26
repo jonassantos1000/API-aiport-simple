@@ -12,10 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.magna.aeroporto.config.security.TokenService;
-import com.magna.aeroporto.config.validacao.Users;
 import com.magna.aeroporto.dto.AuthenticationDTO;
-import com.magna.aeroporto.service.UsersService;
+import com.magna.aeroporto.dto.TokenDTO;
+import com.magna.aeroporto.security.TokenService;
 
 @RestController
 @RequestMapping(value = "/auth")
@@ -27,20 +26,11 @@ public class AuthenticationResource {
 	@Autowired
 	private TokenService tokenService;
 	
-	@Autowired
-	private UsersService service;
-	
 	@PostMapping
-	public ResponseEntity<?> authentication (@RequestBody @Valid AuthenticationDTO auth){
-		Users user = new Users();
-		user.setEmail(auth.getEmail());
-		user.setPassword("$2a$10$OutjCfvo0RlNLUw8Ji3IMeEcG1j7JP7/Ycjg26XnRcqJSuQCk1MN.");
-		service.insert(user);
-		
+	public ResponseEntity<TokenDTO> authentication (@RequestBody @Valid AuthenticationDTO auth){
 		UsernamePasswordAuthenticationToken login = auth.converter();
 		Authentication authentication = manager.authenticate(login);
 		String token = tokenService.gerarToken(authentication);
-		System.out.println("token: " + token);
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok(new TokenDTO(token, "Bearer"));
 	}
 }

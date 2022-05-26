@@ -2,8 +2,6 @@ package com.magna.aeroporto.dto;
 
 import java.time.Instant;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -14,13 +12,13 @@ import com.magna.aeroporto.entities.Ticket;
 public class TicketDTO {
 	private Long id;
 
-	@NotNull @NotEmpty @NotBlank
+	@NotNull
 	private Flight flight;
 	
-	@NotNull @NotEmpty @NotBlank
+	@NotNull
 	private Client client;
 	
-	@NotNull @NotEmpty @NotBlank
+	@NotNull
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT")
 	private Instant dataCompra;
 	

@@ -38,9 +38,9 @@ public class TicketResource {
 	
 	@PostMapping
 	public ResponseEntity<Ticket> insert(@Valid @RequestBody TicketDTO dto){
+		dto.setFlight(flightService.findById(dto.getFlight().getId()));
+		dto.setClient(clientService.findById(dto.getClient().getId()));
 		Ticket ticket = service.insert(Ticket.converteDTO(dto));
-		ticket.setFlight(flightService.findById(ticket.getFlight().getId()));
-		ticket.setClient(clientService.findById(ticket.getClient().getId()));
 		return new ResponseEntity<>(ticket, HttpStatus.CREATED);
 	}
 	
@@ -62,9 +62,9 @@ public class TicketResource {
 	
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<Ticket> update(@RequestBody TicketDTO dto, @PathVariable Long id){
+		dto.setFlight(flightService.findById(dto.getFlight().getId()));
+		dto.setClient(clientService.findById(dto.getClient().getId()));
 		Ticket ticket = service.update(Ticket.converteDTO(dto), id);
-		ticket.setFlight(flightService.findById(ticket.getFlight().getId()));
-		ticket.setClient(clientService.findById(ticket.getClient().getId()));
 		return new ResponseEntity<>(ticket, HttpStatus.OK);
 	}
 		

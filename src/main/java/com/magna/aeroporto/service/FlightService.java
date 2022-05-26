@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.magna.aeroporto.entities.Flight;
 import com.magna.aeroporto.repositories.FlightRepository;
 import com.magna.aeroporto.service.exceptions.ResourceNotFoundException;
+import com.magna.aeroporto.service.exceptions.SQLIntegrityConstraintViolationException;
 
 @Service
 public class FlightService {
@@ -52,6 +53,8 @@ public class FlightService {
 			repository.deleteById(id);
 		}catch(org.springframework.dao.EmptyResultDataAccessException e) {
 			throw new ResourceNotFoundException(new Throwable("ID"),"Não foi possivel encontrar um recurso válido com o id: "+id);
+		}catch(SQLIntegrityConstraintViolationException ex) {
+			throw new SQLIntegrityConstraintViolationException(new Throwable("Violação de constraint"),"Não foi possível finalizar a operação, pois este recurso já possui movimentações");
 		}
 	}
 }

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Set;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -18,19 +17,19 @@ public class ClientDTO implements Serializable{
 	
 	private Long id;
 	
-	@NotNull @NotEmpty @NotBlank
+	@NotNull @NotEmpty
 	private String nome;
 
-	@NotNull @NotEmpty @NotBlank @CPF
+	@NotNull @NotEmpty @CPF
 	private String cpf; 
 	
-	@NotNull @NotEmpty @NotBlank
+	@NotNull @NotEmpty
 	private String logradouro;
 	
-	@NotNull @NotEmpty @NotBlank
+	@NotNull @NotEmpty
 	private String telefone;
 	
-	@NotNull @NotEmpty @NotBlank @Email
+	@NotNull @NotEmpty @Email
 	private String email;
 	
 	private Set<Ticket> ticket;

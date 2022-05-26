@@ -1,4 +1,4 @@
-package com.magna.aeroporto.config.security;
+package com.magna.aeroporto.security;
 
 import java.util.Optional;
 
@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.magna.aeroporto.config.validacao.Users;
+import com.magna.aeroporto.entities.Users;
 import com.magna.aeroporto.repositories.UserRepository;
 
 @Service
