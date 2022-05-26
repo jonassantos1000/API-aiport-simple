@@ -19,7 +19,6 @@ public class ClientService {
 	public Client insert(Client client) {
 		return repository.save(client);
 	}
-	
 	public List<Client> findAll(){
 		return repository.findAll();
 	}

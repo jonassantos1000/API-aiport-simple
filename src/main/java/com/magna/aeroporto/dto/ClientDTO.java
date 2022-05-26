@@ -3,9 +3,12 @@ package com.magna.aeroporto.dto;
 import java.io.Serializable;
 import java.util.Set;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.br.CPF;
 
 import com.magna.aeroporto.entities.Client;
 import com.magna.aeroporto.entities.Ticket;
@@ -18,8 +21,8 @@ public class ClientDTO implements Serializable{
 	@NotNull @NotEmpty @NotBlank
 	private String nome;
 
-	@NotNull @NotEmpty @NotBlank
-	private String cpf;
+	@NotNull @NotEmpty @NotBlank @CPF
+	private String cpf; 
 	
 	@NotNull @NotEmpty @NotBlank
 	private String logradouro;
@@ -27,7 +30,7 @@ public class ClientDTO implements Serializable{
 	@NotNull @NotEmpty @NotBlank
 	private String telefone;
 	
-	@NotNull @NotEmpty @NotBlank
+	@NotNull @NotEmpty @NotBlank @Email
 	private String email;
 	
 	private Set<Ticket> ticket;

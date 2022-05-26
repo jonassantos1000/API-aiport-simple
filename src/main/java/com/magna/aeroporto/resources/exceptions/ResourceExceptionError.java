@@ -50,7 +50,6 @@ public class ResourceExceptionError {
 	
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity<TemplateError> resourceNotFound(ResourceNotFoundException e, HttpServletRequest request){
-		String error="Resource not found";
 		HttpStatus status= HttpStatus.NOT_FOUND;
 		TemplateError err = new TemplateError(e.getCause().getMessage(), e.getMessage(), Instant.now(), status.value());
 		return ResponseEntity.status(status).body(err);

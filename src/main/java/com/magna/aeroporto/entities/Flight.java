@@ -118,7 +118,6 @@ public class Flight implements Serializable {
 		
 	public static Flight converteDTO(FlightDTO flight) {
 		Flight dto = new Flight();
-		System.out.println(flight.getId());
 		dto.setArrivalTime(flight.getArrivalTime());
 		dto.setDepartureTime(flight.getDepartureTime());
 		dto.setDestiny(flight.getDestiny());

@@ -5,27 +5,27 @@ import java.time.Instant;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class TemplateError {
-	private String causador;
-	private String mensagem;
+	private String cause;
+	private String message;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone="GMT")
 	private Instant timestamp;
 	private Integer status;
 	
-	public TemplateError(String causador, String mensagem, Instant timestamp, Integer status) {
+	public TemplateError(String cause, String message, Instant timestamp, Integer status) {
 		super();
-		this.causador = causador;
-		this.mensagem = mensagem;
+		this.cause = cause;
+		this.message = message;
 		this.timestamp = timestamp;
 		this.status = status;
 	}
 
-	public String getMensagem() {
-		return mensagem;
+	public String getCause() {
+		return cause;
 	}
 
-	public String getCausador() {
-		return causador;
+	public String getMessage() {
+		return message;
 	}
 
 	public Instant getTimestamp() {
@@ -34,6 +34,5 @@ public class TemplateError {
 
 	public Integer getStatus() {
 		return status;
-	}
-		
+	}		
 }
