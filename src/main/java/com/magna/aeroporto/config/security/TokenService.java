@@ -1,4 +1,4 @@
-package com.magna.aeroporto.security;
+package com.magna.aeroporto.config.security;
 
 import java.util.Date;
 
