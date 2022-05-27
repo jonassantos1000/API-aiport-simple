@@ -1,5 +1,10 @@
 package com.magna.aeroporto.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import javax.transaction.Transactional;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -16,10 +21,65 @@ public class ClientServiceTest {
 	private ClientService service;
 	
 	@Test
-	public void findById() {
+	public void deveriaRetornarOhClientPeloID() {
 		Long id = 1l;
 		Client client = service.findById(id);
 		Assert.assertNotNull(client);
 		Assert.assertEquals(id, client.getId());
 	}
+	
+	@Test
+	public void deveriaLancarExceptionAoBuscarClientPeloIdInexistente() {
+		try {
+			Long id = 999l;
+			Client client = service.findById(id);
+			fail();
+		}catch(Exception e) {
+			Assert.assertEquals(e.getMessage(), "Não foi possivel encontrar um recurso válido com o id: " + 999l);
+		}
+	}
+	
+	@Test
+	public void deveriaInserirOhClient() {
+		Client client = new Client(null, "joao", "50229624898", "rua maria", "20541155", "joao@hotmail.com");
+		service.insert(client);
+		Client retorno = service.findById(2l);
+		assertEquals(client, retorno);
+	}
+	
+	@Transactional
+	@Test
+	public void deveriaAlterarOhClient() {
+		Client client = new Client(1l, "jotaPE", "50229624898", "rua maria", "20541155", "joao@hotmail.com");
+		Client retorno = service.update(client, client.getId());
+		assertEquals(client, retorno);
+	}
+	
+	@Transactional
+	@Test
+	public void deveriaLancarExceptionAoAlterarClientInexistente() {
+		try {
+			Client client = new Client(5l, "jotaPE", "50229624898", "rua maria", "20541155", "joao@hotmail.com");
+			Client retorno = service.update(client, client.getId());
+			fail();
+		}catch(Exception e) {
+			
+		}
+	}
+	
+	@Test
+	public void deveriaExcluirClient() {
+		service.delete(1l);
+	}
+	
+	@Test
+	public void deveriaLancarExceptionAoExcluirClienteInexistente() {
+		try {
+			service.delete(3l);
+			fail();
+		}catch(Exception  e){
+			Assert.assertEquals(e.getMessage(), "Não foi possivel encontrar um recurso válido com o id: "+3l);
+		}
+	}
+	 
 }
