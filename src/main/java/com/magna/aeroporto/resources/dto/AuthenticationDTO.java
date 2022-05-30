@@ -1,4 +1,4 @@
-package com.magna.aeroporto.dto;
+package com.magna.aeroporto.resources.dto;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 

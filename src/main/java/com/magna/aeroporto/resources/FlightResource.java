@@ -17,8 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.magna.aeroporto.dto.FlightDTO;
 import com.magna.aeroporto.entities.Flight;
+import com.magna.aeroporto.resources.dto.FlightDTO;
+import com.magna.aeroporto.resources.form.FlightForm;
 import com.magna.aeroporto.service.FlightService;
 
 @RestController
@@ -29,8 +30,8 @@ public class FlightResource {
 	FlightService service;
 	
 	@PostMapping
-	public ResponseEntity<Flight> insert(@Valid @RequestBody FlightDTO dto){
-		Flight flight = service.insert(Flight.converteDTO(dto));
+	public ResponseEntity<Flight> insert(@Valid @RequestBody FlightForm dto){
+		Flight flight = service.insert(Flight.converteForm(dto));
 		return new ResponseEntity<>(flight, HttpStatus.CREATED);
 	}
 	
@@ -52,8 +53,8 @@ public class FlightResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Flight> update(@RequestBody FlightDTO dto, @PathVariable Long id){
-		Flight flight = service.update(Flight.converteDTO(dto), id);
+	public ResponseEntity<Flight> update(@RequestBody FlightForm dto, @PathVariable Long id){
+		Flight flight = service.update(Flight.converteForm(dto), id);
 		return new ResponseEntity<> (flight, HttpStatus.OK);
 	}
 	
@@ -62,4 +63,5 @@ public class FlightResource {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
+	
 }

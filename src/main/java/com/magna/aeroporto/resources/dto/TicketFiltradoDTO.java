@@ -1,6 +1,6 @@
-package com.magna.aeroporto.dto;
+package com.magna.aeroporto.resources.dto;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.magna.aeroporto.entities.Client;
@@ -13,7 +13,7 @@ public class TicketFiltradoDTO {
 		private Client client;
 		
 		@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT")
-		private Instant dataCompra;
+		private LocalDateTime dataCompra;
 		
 		public TicketFiltradoDTO() {
 			
@@ -42,11 +42,11 @@ public class TicketFiltradoDTO {
 			this.client = client;
 		}
 
-		public Instant getDataCompra() {
+		public LocalDateTime getDataCompra() {
 			return dataCompra;
 		}
 
-		public void setDataCompra(Instant dataCompra) {
+		public void setDataCompra(LocalDateTime dataCompra) {
 			this.dataCompra = dataCompra;
 		}
 

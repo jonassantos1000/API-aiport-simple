@@ -17,8 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.magna.aeroporto.dto.ClientDTO;
 import com.magna.aeroporto.entities.Client;
+import com.magna.aeroporto.resources.dto.ClientDTO;
+import com.magna.aeroporto.resources.form.ClientForm;
 import com.magna.aeroporto.service.ClientService;
 
 @RestController
@@ -46,15 +47,15 @@ public class ClientResource {
 	}
 
 	@PostMapping
-	public ResponseEntity<Client> insert(@Valid @RequestBody ClientDTO clientDTO) {
-		Client client = Client.converterDTO(clientDTO); 	
+	public ResponseEntity<Client> insert(@Valid @RequestBody ClientForm clientDTO) {
+		Client client = Client.converterForm(clientDTO); 	
 		service.insert(client);
 		return new ResponseEntity<>(client, HttpStatus.CREATED);
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Client> update(@Valid @RequestBody ClientDTO clientDTO, @PathVariable Long id){
-		Client client = service.update(Client.converterDTO(clientDTO), id);
+	public ResponseEntity<Client> update(@Valid @RequestBody ClientForm clientDTO, @PathVariable Long id){
+		Client client = service.update(Client.converterForm(clientDTO), id);
 		return new ResponseEntity<>(client, HttpStatus.OK);
 	}
 	

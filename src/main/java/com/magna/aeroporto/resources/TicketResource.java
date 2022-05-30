@@ -17,8 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.magna.aeroporto.dto.TicketDTO;
 import com.magna.aeroporto.entities.Ticket;
+import com.magna.aeroporto.resources.dto.TicketDTO;
+import com.magna.aeroporto.resources.form.TicketForm;
 import com.magna.aeroporto.service.ClientService;
 import com.magna.aeroporto.service.FlightService;
 import com.magna.aeroporto.service.TicketService;
@@ -37,11 +38,11 @@ public class TicketResource {
 	ClientService clientService;
 	
 	@PostMapping
-	public ResponseEntity<Ticket> insert(@Valid @RequestBody TicketDTO dto){
-		dto.setFlight(flightService.findById(dto.getFlight().getId()));
-		dto.setClient(clientService.findById(dto.getClient().getId()));
-		Ticket ticket = service.insert(Ticket.converteDTO(dto));
-		return new ResponseEntity<>(ticket, HttpStatus.CREATED);
+	public ResponseEntity<TicketDTO> insert(@Valid @RequestBody TicketForm dto){
+		Ticket ticket = populaDTO(dto);
+		service.insert(ticket);
+		TicketDTO ticketDto = TicketDTO.converteEntity(ticket);
+		return new ResponseEntity<>(ticketDto, HttpStatus.CREATED);
 	}
 	
 	@GetMapping
@@ -61,16 +62,24 @@ public class TicketResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Ticket> update(@RequestBody TicketDTO dto, @PathVariable Long id){
-		dto.setFlight(flightService.findById(dto.getFlight().getId()));
-		dto.setClient(clientService.findById(dto.getClient().getId()));
-		Ticket ticket = service.update(Ticket.converteDTO(dto), id);
-		return new ResponseEntity<>(ticket, HttpStatus.OK);
+	public ResponseEntity<TicketDTO> update(@RequestBody TicketForm dto, @PathVariable Long id){
+		Ticket ticket = populaDTO(dto);
+		TicketDTO ticketDto = TicketDTO.converteEntity(service.update(ticket, id));
+		return new ResponseEntity<>(ticketDto, HttpStatus.OK);
 	}
 		
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id){
 		service.delete(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	private Ticket populaDTO(TicketForm dto) {
+		Ticket ticket = new Ticket(); 
+		ticket.setId(dto.getId());
+		ticket.setDataCompra(dto.getDataCompra());
+		ticket.setClient(clientService.findById(dto.getIdClient()));
+		ticket.setFlight(flightService.findById(dto.getIdFlight()));
+		return ticket;
 	}
 }

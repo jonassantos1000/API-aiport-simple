@@ -29,7 +29,7 @@ public class ClientService {
 		if (client.isPresent())
 			return client.get();
 		else
-			throw new ResourceNotFoundException(new Throwable("ID"),"Não foi possivel encontrar um recurso válido com o id: "+id);
+			throw new ResourceNotFoundException(new Throwable("ID"),"Não foi possivel encontrar um recurso client válido com o id: "+id);
 	}
 	
 	public Client update(Client client, Long id) {
@@ -38,7 +38,7 @@ public class ClientService {
 			updateData(clientAtual, client);
 			return repository.save(clientAtual);
 		}catch(javax.persistence.EntityNotFoundException e) {
-			throw new ResourceNotFoundException(new Throwable("Recurso Inexistente"),"Recurso que deseja atualizar não existe, verifique as informações passadas e tente novamente !");
+			throw new ResourceNotFoundException(new Throwable("Recurso Inexistente"),"Recurso client que deseja atualizar não existe, verifique as informações passadas e tente novamente !");
 		}
 	}
 	
@@ -54,9 +54,9 @@ public class ClientService {
 		try {
 			repository.deleteById(id);
 		}catch(org.springframework.dao.EmptyResultDataAccessException e) {
-			throw new ResourceNotFoundException(new Throwable("ID"),"Não foi possivel encontrar um recurso válido com o id: "+id);
+			throw new ResourceNotFoundException(new Throwable("ID"),"Não foi possivel encontrar um recurso client válido com o id: "+id);
 		}catch(SQLIntegrityConstraintViolationException ex) {
-			throw new SQLIntegrityConstraintViolationException(new Throwable("Violação de constraint"),"Não foi possível finalizar a operação, pois este recurso já possui movimentações");
+			throw new SQLIntegrityConstraintViolationException(new Throwable("Violação de constraint"),"Não foi possível finalizar a operação, pois este recurso client já possui movimentações");
 		}
 	}	
 }

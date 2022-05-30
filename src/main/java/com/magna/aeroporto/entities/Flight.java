@@ -1,7 +1,7 @@
 package com.magna.aeroporto.entities;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
 
@@ -14,7 +14,8 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.magna.aeroporto.dto.FlightDTO;
+import com.magna.aeroporto.resources.dto.FlightDTO;
+import com.magna.aeroporto.resources.form.FlightForm;
 
 @Entity
 public class Flight implements Serializable {
@@ -32,11 +33,11 @@ public class Flight implements Serializable {
 	
 	@NotNull
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT")
-	private Instant departureTime;
+	private LocalDateTime departureTime;
 	
 	@NotNull
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT")
-	private Instant arrivalTime;
+	private LocalDateTime arrivalTime;
 	
 	@NotNull
 	private Double price= 0.0;
@@ -48,7 +49,7 @@ public class Flight implements Serializable {
 		
 	}
 
-	public Flight(Long id, String destiny, String origin, Instant departureTime, Instant arrivalTime,
+	public Flight(Long id, String destiny, String origin, LocalDateTime departureTime, LocalDateTime arrivalTime,
 			Double price) {
 		super();
 		this.id = id;
@@ -83,19 +84,19 @@ public class Flight implements Serializable {
 		this.origin = origin;
 	}
 
-	public Instant getDepartureTime() {
+	public LocalDateTime getDepartureTime() {
 		return departureTime;
 	}
 
-	public void setDepartureTime(Instant departureTime) {
+	public void setDepartureTime(LocalDateTime departureTime) {
 		this.departureTime = departureTime;
 	}
 
-	public Instant getArrivalTime() {
+	public LocalDateTime getArrivalTime() {
 		return arrivalTime;
 	}
 
-	public void setArrivalTime(Instant arrivalTime) {
+	public void setArrivalTime(LocalDateTime arrivalTime) {
 		this.arrivalTime = arrivalTime;
 	}
 
@@ -125,6 +126,17 @@ public class Flight implements Serializable {
 		dto.setOrigin(flight.getOrigin());
 		dto.setPrice(flight.getPrice());
 		dto.setTicket(flight.getTickets());
+		return dto;
+	}
+	
+	public static Flight converteForm(FlightForm flight) {
+		Flight dto = new Flight();
+		dto.setArrivalTime(flight.getArrivalTime());
+		dto.setDepartureTime(flight.getDepartureTime());
+		dto.setDestiny(flight.getDestiny());
+		dto.setId(flight.getId());
+		dto.setOrigin(flight.getOrigin());
+		dto.setPrice(flight.getPrice());
 		return dto;
 	}
 

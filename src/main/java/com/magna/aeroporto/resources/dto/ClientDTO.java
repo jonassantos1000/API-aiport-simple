@@ -1,4 +1,4 @@
-package com.magna.aeroporto.dto;
+package com.magna.aeroporto.resources.dto;
 
 import java.io.Serializable;
 import java.util.Set;

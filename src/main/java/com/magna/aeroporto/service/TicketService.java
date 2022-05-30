@@ -26,7 +26,7 @@ public class TicketService {
 	
 	public Ticket findById(Long id) {
 		Optional<Ticket> ticket = repository.findById(id);
-		return ticket.orElseThrow(() -> new ResourceNotFoundException(new Throwable("ID"),"Não foi possivel encontrar um recurso válido com o id: "+id));
+		return ticket.orElseThrow(() -> new ResourceNotFoundException(new Throwable("ID"),"Não foi possivel encontrar um recurso Ticket válido com o id: "+id));
 	}
 	
 	public Ticket update(Ticket ticket, Long id) {
@@ -35,7 +35,7 @@ public class TicketService {
 			updateData(atual, ticket);
 			return repository.save(atual);
 		}catch(javax.persistence.EntityNotFoundException e) {
-			throw new ResourceNotFoundException(new Throwable("Recurso Inexistente"),"Recurso que deseja atualizar não existe, verifique as informações passadas e tente novamente !");
+			throw new ResourceNotFoundException(new Throwable("Recurso Inexistente"),"Recurso Ticket que deseja atualizar não existe, verifique as informações passadas e tente novamente !");
 		}
 	}
 	
@@ -48,7 +48,7 @@ public class TicketService {
 		try {
 			repository.deleteById(id);
 		}catch(org.springframework.dao.EmptyResultDataAccessException e) {
-			throw new ResourceNotFoundException(new Throwable("ID"),"Não foi possivel encontrar um recurso válido com o id: "+id);
+			throw new ResourceNotFoundException(new Throwable("ID"),"Não foi possivel encontrar um recurso Ticket válido com o id: "+id);
 		}
 	}
 }

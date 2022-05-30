@@ -1,6 +1,6 @@
-package com.magna.aeroporto.dto;
+package com.magna.aeroporto.resources.dto;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,11 +26,11 @@ public class FlightDTO {
 	
 	@NotNull
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT")
-	private Instant departureTime;
+	private LocalDateTime departureTime;
 	
 	@NotNull
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT")
-	private Instant arrivalTime;
+	private LocalDateTime arrivalTime;
 	
 	@Digits(integer = 7, fraction = 2)
 	private Double price;
@@ -41,7 +41,7 @@ public class FlightDTO {
 		
 	}
 
-	public FlightDTO(Long id, String destiny, String origin, Instant departureTime, Instant arrivalTime, Double price,
+	public FlightDTO(Long id, String destiny, String origin, LocalDateTime departureTime, LocalDateTime arrivalTime, Double price,
 			Set<Ticket> ticket) {
 		super();
 		this.id = id;
@@ -77,19 +77,19 @@ public class FlightDTO {
 		this.origin = origin;
 	}
 
-	public Instant getDepartureTime() {
+	public LocalDateTime getDepartureTime() {
 		return departureTime;
 	}
 
-	public void setDepartureTime(Instant departureTime) {
+	public void setDepartureTime(LocalDateTime departureTime) {
 		this.departureTime = departureTime;
 	}
 
-	public Instant getArrivalTime() {
+	public LocalDateTime getArrivalTime() {
 		return arrivalTime;
 	}
 
-	public void setArrivalTime(Instant arrivalTime) {
+	public void setArrivalTime(LocalDateTime arrivalTime) {
 		this.arrivalTime = arrivalTime;
 	}
 

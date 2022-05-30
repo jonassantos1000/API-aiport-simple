@@ -12,7 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.magna.aeroporto.dto.ClientDTO;
+import com.magna.aeroporto.resources.dto.ClientDTO;
+import com.magna.aeroporto.resources.form.ClientForm;
 
 @Entity
 public class Client implements Serializable{
@@ -98,6 +99,18 @@ public class Client implements Serializable{
 	
 	@JsonIgnore
 	public static Client converterDTO(ClientDTO dto) {
+		Client client = new Client();
+		client.setId(dto.getId());
+		client.setCpf(dto.getCpf());
+		client.setEmail(dto.getEmail());
+		client.setLogradouro(dto.getLogradouro());
+		client.setNome(dto.getNome());
+		client.setTelefone(dto.getTelefone());
+		return client;
+	}
+	
+	@JsonIgnore
+	public static Client converterForm(ClientForm dto) {
 		Client client = new Client();
 		client.setId(dto.getId());
 		client.setCpf(dto.getCpf());

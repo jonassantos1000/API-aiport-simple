@@ -27,7 +27,7 @@ public class FlightService {
 	
 	public Flight findById(Long id) {
 		Optional<Flight> flight = repository.findById(id);
-		return flight.orElseThrow(() -> new ResourceNotFoundException(new Throwable("ID"),"Não foi possivel encontrar um recurso válido com o id: "+id));
+		return flight.orElseThrow(() -> new ResourceNotFoundException(new Throwable("ID"),"Não foi possivel encontrar um recurso flight válido com o id: "+id));
 	}
 	
 	public Flight update(Flight flight, Long id) {
@@ -36,7 +36,7 @@ public class FlightService {
 			updateData(atual,flight);
 			return repository.save(atual);
 		}catch(javax.persistence.EntityNotFoundException e) {
-			throw new ResourceNotFoundException(new Throwable("Recurso Inexistente"),"Recurso que deseja atualizar não existe, verifique as informações passadas e tente novamente !");
+			throw new ResourceNotFoundException(new Throwable("Recurso Inexistente"),"Recurso flight que deseja atualizar não existe, verifique as informações passadas e tente novamente !");
 		}
 	}
 	
@@ -52,7 +52,7 @@ public class FlightService {
 		try {
 			repository.deleteById(id);
 		}catch(org.springframework.dao.EmptyResultDataAccessException e) {
-			throw new ResourceNotFoundException(new Throwable("ID"),"Não foi possivel encontrar um recurso válido com o id: "+id);
+			throw new ResourceNotFoundException(new Throwable("ID"),"Não foi possivel encontrar um recurso flight válido com o id: "+id);
 		}catch(SQLIntegrityConstraintViolationException ex) {
 			throw new SQLIntegrityConstraintViolationException(new Throwable("Violação de constraint"),"Não foi possível finalizar a operação, pois este recurso já possui movimentações");
 		}

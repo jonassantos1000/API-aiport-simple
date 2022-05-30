@@ -1,7 +1,7 @@
 package com.magna.aeroporto.entities;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.magna.aeroporto.dto.TicketDTO;
+import com.magna.aeroporto.resources.dto.TicketDTO;
 
 @Entity
 public class Ticket implements Serializable{
@@ -36,13 +36,13 @@ public class Ticket implements Serializable{
 	
 	@NotNull
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT")
-	private Instant dataCompra;
+	private LocalDateTime dataCompra;
 	
 	public Ticket() {
 		
 	}
 
-	public Ticket(Long id, Flight flight, Client client, Instant dataCompra) {
+	public Ticket(Long id, Flight flight, Client client, LocalDateTime dataCompra) {
 		super();
 		this.id = id;
 		this.flight = flight;
@@ -66,6 +66,7 @@ public class Ticket implements Serializable{
 		this.flight = flight;
 	}
 
+	@JsonIgnore
 	public Client getClient() {
 		return client;
 	}
@@ -74,11 +75,11 @@ public class Ticket implements Serializable{
 		this.client = client;
 	}
 
-	public Instant getDataCompra() {
+	public LocalDateTime getDataCompra() {
 		return dataCompra;
 	}
 
-	public void setDataCompra(Instant dataCompra) {
+	public void setDataCompra(LocalDateTime dataCompra) {
 		this.dataCompra = dataCompra;
 	}
 	

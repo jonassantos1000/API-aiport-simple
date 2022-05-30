@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.magna.aeroporto.config.security.TokenService;
-import com.magna.aeroporto.dto.AuthenticationDTO;
-import com.magna.aeroporto.dto.TokenDTO;
+import com.magna.aeroporto.resources.dto.AuthenticationDTO;
+import com.magna.aeroporto.resources.dto.TokenDTO;
 
 @RestController
 @RequestMapping(value = "/auth")

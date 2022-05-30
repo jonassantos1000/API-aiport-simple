@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 class AeroportoApplicationTests {
 
 	@Test
-	public void contextLoads() {
+	 void contextLoads() {
 		Assert.assertTrue(true);
 	}
 
