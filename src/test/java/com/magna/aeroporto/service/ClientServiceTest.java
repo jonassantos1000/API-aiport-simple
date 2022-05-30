@@ -42,8 +42,8 @@ class ClientServiceTest {
 	@Test
 	void deveriaInserirOhClient() {
 		Client client = new Client(null, "joao", "50229624898", "rua maria", "20541155", "joao@hotmail.com");
-		service.insert(client);
-		Client retorno = service.findById(2l);
+		client = service.insert(client);
+		Client retorno = service.findById(client.getId());
 		assertEquals(client, retorno);
 	}
 	
@@ -69,9 +69,9 @@ class ClientServiceTest {
 	
 	@Test
 	void deveriaExcluirClient() {
-		service.delete(1l);
+		service.delete(2l);
 		try{
-			service.findById(1l);
+			service.findById(2l);
 			fail();
 		}catch(Exception e) {
 			
@@ -80,11 +80,12 @@ class ClientServiceTest {
 	
 	@Test
 	void deveriaLancarExceptionAoExcluirClienteInexistente() {
+		Long id = 99l;
 		try {
-			service.delete(3l);
+			service.delete(id);
 			fail();
 		}catch(Exception  e){
-			Assert.assertEquals(e.getMessage(), "Não foi possivel encontrar um recurso client válido com o id: "+3l);
+			Assert.assertEquals(e.getMessage(), "Não foi possivel encontrar um recurso client válido com o id: "+ id);
 		}
 	}
 	 

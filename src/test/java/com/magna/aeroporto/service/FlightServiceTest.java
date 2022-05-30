@@ -44,9 +44,9 @@ class FlightServiceTest {
 		
 		@Test
 		void deveriaInserirOhFlight() {	
-			Flight flight = new Flight (2l, "japao", "brasil", LocalDateTime.of(2021,05,10,10,00,00), LocalDateTime.of(2021,05,13,15,00,00), 500.0);
+			Flight flight = new Flight (3l, "japao", "brasil", LocalDateTime.of(2021,05,10,10,00,00), LocalDateTime.of(2021,05,13,15,00,00), 500.0);
 			service.insert(flight);
-			Flight retorno = service.findById(2l);
+			Flight retorno = service.findById(3l);
 			assertEquals(flight, retorno);
 		}
 		
@@ -63,7 +63,7 @@ class FlightServiceTest {
 		@Test
 		void deveriaLancarExceptionAoAlterarFlightInexistente() {
 			try {
-				Flight flight = new Flight(1l, "japao", "brasil", LocalDateTime.of(2021,05,10,10,00,00), LocalDateTime.of(2021,05,13,15,00,00), 500.0);
+				Flight flight = new Flight(999l, "japao", "brasil", LocalDateTime.of(2021,05,10,10,00,00), LocalDateTime.of(2021,05,13,15,00,00), 500.0);
 				Flight retorno = service.update(flight, flight.getId());
 				fail();
 			}catch(Exception e) {
@@ -73,9 +73,9 @@ class FlightServiceTest {
 		
 		@Test
 		void deveriaExcluirFlight() {
-			service.delete(1l);
+			service.delete(2l);
 			try{
-				service.findById(1l);
+				service.findById(2l);
 				fail();
 			}catch(Exception e) {
 				
