@@ -1,42 +1,28 @@
-package com.magna.aeroporto.entities;
+package com.magna.aeroporto.controller.dto;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.magna.aeroporto.entities.Client;
+import com.magna.aeroporto.entities.Flight;
+import com.magna.aeroporto.entities.Ticket;
 
-@Entity
-public class Ticket implements Serializable{
-	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+public class TicketDTO {
 	private Long id;
-	
+
 	@NotNull
-	@ManyToOne
-	@JoinColumn(name="flight_id")
 	private Flight flight;
 	
 	@NotNull
-	@ManyToOne
-	@JoinColumn(name="client_id")
 	private Client client;
 	
 	@NotNull
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT")
 	private LocalDateTime dataCompra;
 	
-	public Ticket() {
+	public TicketDTO() {
 		super();
 	}
 
@@ -56,7 +42,6 @@ public class Ticket implements Serializable{
 		this.flight = flight;
 	}
 
-	@JsonIgnore
 	public Client getClient() {
 		return client;
 	}
@@ -71,5 +56,14 @@ public class Ticket implements Serializable{
 
 	public void setDataCompra(LocalDateTime dataCompra) {
 		this.dataCompra = dataCompra;
-	}	
+	}
+	
+	public static TicketDTO converteEntity(Ticket ticket) {
+		TicketDTO dto = new TicketDTO();
+		dto.setClient(ticket.getClient());
+		dto.setDataCompra(ticket.getDataCompra());
+		dto.setFlight(ticket.getFlight());
+		dto.setId(ticket.getId());
+		return dto;
+	}
 }

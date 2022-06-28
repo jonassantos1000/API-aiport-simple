@@ -5,8 +5,6 @@ import java.util.Arrays;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.magna.aeroporto.entities.Users;
-
 import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -24,7 +22,6 @@ public class SwaggerConfiguration {
 	            .apis(RequestHandlerSelectors.basePackage("com.magna.aeroporto"))
 				.paths(PathSelectors.ant("/**"))
 				.build()
-				.ignoredParameterTypes(Users.class)
 		        .globalOperationParameters(Arrays.asList(
 		                new ParameterBuilder()
 		                .name("Authorization")

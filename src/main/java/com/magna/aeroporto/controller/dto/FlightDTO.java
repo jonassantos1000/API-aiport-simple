@@ -1,32 +1,27 @@
-package com.magna.aeroporto.entities;
+package com.magna.aeroporto.controller.dto;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.magna.aeroporto.controller.form.FlightForm;
+import com.magna.aeroporto.entities.Flight;
+import com.magna.aeroporto.entities.Ticket;
 
-@Entity
-public class Flight implements Serializable {
-	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+public class FlightDTO {
+	
 	private Long id;
 	
-	@NotNull
+	@NotNull @NotEmpty
 	private String destiny;
 	
-	@NotNull
+	@NotNull @NotEmpty
 	private String origin;
 	
 	@NotNull
@@ -37,25 +32,13 @@ public class Flight implements Serializable {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT")
 	private LocalDateTime arrivalTime;
 	
-	@NotNull
-	private Double price= 0.0;
+	@Digits(integer = 7, fraction = 2)
+	private Double price;
 	
-	@OneToMany(mappedBy = "flight")
 	private Set<Ticket> ticket;
 
-	public Flight () {
-		
-	}
-
-	public Flight(Long id, String destiny, String origin, LocalDateTime departureTime, LocalDateTime arrivalTime,
-			Double price) {
+	public FlightDTO () {
 		super();
-		this.id = id;
-		this.destiny = destiny;
-		this.origin = origin;
-		this.departureTime = departureTime;
-		this.arrivalTime = arrivalTime;
-		this.price = price;
 	}
 
 	public Long getId() {
@@ -106,23 +89,32 @@ public class Flight implements Serializable {
 		this.price = price;
 	}
 	
-	public void setTicket(Set<Ticket> ticket) {
-		this.ticket = ticket;
+	public void setTickets(Set<Ticket> ticket) {
+		this.ticket= ticket;
 	}
-
+	
 	@JsonIgnore
 	public Set<Ticket> getTickets (){
 		return ticket;
 	}
-			
-	public static Flight converteForm(FlightForm flight) {
-		Flight dto = new Flight();
+	
+	@JsonGetter(value = "Tickets")
+	public Set<TicketFiltradoDTO> getTicketFiltrado(){
+		Set<TicketFiltradoDTO> ticketsFiltrados = new HashSet<>();
+		this.ticket.forEach(item ->
+			ticketsFiltrados.add(new TicketFiltradoDTO(item)));
+		return ticketsFiltrados;
+	}
+	
+	public static FlightDTO converteEntity(Flight flight) {
+		FlightDTO dto = new FlightDTO();
 		dto.setArrivalTime(flight.getArrivalTime());
 		dto.setDepartureTime(flight.getDepartureTime());
 		dto.setDestiny(flight.getDestiny());
 		dto.setId(flight.getId());
 		dto.setOrigin(flight.getOrigin());
 		dto.setPrice(flight.getPrice());
+		dto.setTickets(flight.getTickets());
 		return dto;
 	}
 }
