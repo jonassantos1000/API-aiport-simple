@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.magna.aeroporto.entities.Ticket;
@@ -21,8 +22,13 @@ public class TicketService {
 	private static Logger logger = LoggerFactory.getLogger(TicketService.class);
 	
 	public Ticket insert(Ticket ticket) {
-		logger.info("INICIANDO METODO INSERT DE TICKET");
-		return repository.save(ticket);
+		try {
+			logger.info("INICIANDO METODO INSERT DE TICKET");
+			return repository.save(ticket);
+		}catch(DataIntegrityViolationException e) {
+			logger.error("ERRO AO EXECUTAR METODO insert DE TICKET, VIOLAÇÃO DE CONSTRAINT");
+			throw new DataIntegrityViolationException("VIOLAÇÃO DE CONSTRAINT");
+		}
 	}
 	
 	public List<Ticket> findAll(){

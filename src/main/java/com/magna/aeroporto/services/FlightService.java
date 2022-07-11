@@ -10,6 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.magna.aeroporto.entities.Flight;
+import com.magna.aeroporto.exceptions.IllegalArgumentException;
 import com.magna.aeroporto.exceptions.ResourceNotFoundException;
 import com.magna.aeroporto.exceptions.SQLIntegrityConstraintViolationException;
 import com.magna.aeroporto.repositories.FlightRepository;
@@ -24,6 +25,10 @@ public class FlightService {
 	
 	public Flight insert(Flight flight) {
 		logger.info("INICIANDO METODO INSERT DE FLIGHT");
+		if(flight.getArrivalTime().isBefore(flight.getDepartureTime())) {
+			logger.error("ERRO AO EXECUTAR METODO INSERT DE FLIGHT");
+			throw new IllegalArgumentException("A data de partida não pode ser menor que a de chegada", new Throwable("Data invalida"));
+		}
 		return repository.save(flight);
 	}
 	

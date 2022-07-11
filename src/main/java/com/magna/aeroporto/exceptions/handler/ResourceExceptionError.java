@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.magna.aeroporto.exceptions.IllegalArgumentException;
 import com.magna.aeroporto.exceptions.ResourceNotFoundException;
 import com.magna.aeroporto.exceptions.SQLIntegrityConstraintViolationException;
 
@@ -49,6 +50,13 @@ public class ResourceExceptionError {
 	
 	@ExceptionHandler(SQLIntegrityConstraintViolationException.class)
 	public ResponseEntity<TemplateError> sqlIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException e, HttpServletRequest request){
+		HttpStatus status= HttpStatus.BAD_REQUEST;
+		TemplateError err = new TemplateError(e.getCause().getMessage(), e.getMessage(), Instant.now(), status.value());
+		return ResponseEntity.status(status).body(err);
+	}
+	
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ResponseEntity<TemplateError> illegalArgumentException(IllegalArgumentException e, HttpServletRequest request){
 		HttpStatus status= HttpStatus.BAD_REQUEST;
 		TemplateError err = new TemplateError(e.getCause().getMessage(), e.getMessage(), Instant.now(), status.value());
 		return ResponseEntity.status(status).body(err);
